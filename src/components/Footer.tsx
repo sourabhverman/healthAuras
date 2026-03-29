@@ -1,16 +1,14 @@
 import { Link } from "react-router-dom";
-import { Brain } from "lucide-react";
+import healthoraIcon from "@/assets/healthora-icon.png";
 
 const Footer = () => (
   <footer className="border-t border-border/50 bg-card/30">
     <div className="container mx-auto px-4 py-16">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
         <div className="space-y-4">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-lg bg-primary/20 flex items-center justify-center border border-primary/30">
-              <Brain className="w-5 h-5 text-primary" />
-            </div>
-            <span className="font-display font-bold text-lg">MedAI<span className="text-primary">Pro</span></span>
+          <Link to="/" className="flex items-center gap-2.5">
+            <img src={healthoraIcon} alt="Healthora" className="w-8 h-8 rounded-lg" />
+            <span className="font-display font-bold text-lg">Health<span className="text-emerald-400">ora</span></span>
           </Link>
           <p className="text-sm text-muted-foreground leading-relaxed">
             Transforming healthcare with intelligent AI solutions for clinics, hospitals, and medical practices worldwide.
@@ -26,7 +24,7 @@ const Footer = () => (
             <ul className="space-y-3">
               {col.items.map((item, i) => (
                 <li key={i}>
-                  <Link to={item.to} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  <Link to={item.to} className="text-sm text-muted-foreground hover:text-emerald-400 transition-colors">
                     {item.label}
                   </Link>
                 </li>
@@ -36,7 +34,7 @@ const Footer = () => (
         ))}
       </div>
       <div className="mt-12 pt-8 border-t border-border/50 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} MedAIPro. All rights reserved.
+        © {new Date().getFullYear()} Healthora. All rights reserved.
       </div>
     </div>
   </footer>
