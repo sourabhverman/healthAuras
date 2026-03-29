@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
+import PartnersScene from "@/components/scenes/PartnersScene";
 import { Link } from "react-router-dom";
 import { FlaskConical, Microscope, Plug, Database, Cloud, Lock, ArrowRight, Code2 } from "lucide-react";
 
@@ -27,9 +28,9 @@ const apiFeatures = [
 
 const PartnersPage = () => (
   <Layout>
-    <section className="section-padding hero-gradient relative">
+    <section className="hero-gradient relative overflow-hidden">
       <div className="grid-bg absolute inset-0 opacity-20" />
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-10 pt-16 pb-8">
         <motion.div {...fadeUp} className="text-center max-w-3xl mx-auto space-y-6">
           <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5">Partner Ecosystem</span>
           <h1 className="font-display text-4xl md:text-6xl font-bold">
@@ -37,6 +38,7 @@ const PartnersPage = () => (
           </h1>
           <p className="text-lg text-muted-foreground">Connect with industry-leading platforms and extend your capabilities through our robust partner network.</p>
         </motion.div>
+        <PartnersScene />
       </div>
     </section>
 

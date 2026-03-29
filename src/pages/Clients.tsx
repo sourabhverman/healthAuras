@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
+import ClientsScene from "@/components/scenes/ClientsScene";
 import { Link } from "react-router-dom";
 import {
   AlertTriangle, CheckCircle, Building2, Hospital, Heart,
@@ -37,9 +38,9 @@ const benefits = [
 const ClientsPage = () => (
   <Layout>
     {/* Hero */}
-    <section className="section-padding hero-gradient relative">
+    <section className="hero-gradient relative overflow-hidden">
       <div className="grid-bg absolute inset-0 opacity-20" />
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-10 pt-16 pb-8">
         <motion.div {...fadeUp} className="text-center max-w-3xl mx-auto space-y-6">
           <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5">For Healthcare Providers</span>
           <h1 className="font-display text-4xl md:text-6xl font-bold">
@@ -47,6 +48,7 @@ const ClientsPage = () => (
           </h1>
           <p className="text-lg text-muted-foreground">From solo clinics to hospital networks, Healthora adapts to your unique workflow and scales with your growth.</p>
         </motion.div>
+        <ClientsScene />
       </div>
     </section>
 

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
+import AboutScene from "@/components/scenes/AboutScene";
 import { Eye, Target, BookOpen, Lightbulb, Heart, Globe } from "lucide-react";
 
 const fadeUp = {
@@ -18,9 +19,9 @@ const values = [
 
 const AboutPage = () => (
   <Layout>
-    <section className="section-padding hero-gradient relative">
+    <section className="hero-gradient relative overflow-hidden">
       <div className="grid-bg absolute inset-0 opacity-20" />
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-10 pt-16 pb-8">
         <motion.div {...fadeUp} className="text-center max-w-3xl mx-auto space-y-6">
           <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5">About Us</span>
           <h1 className="font-display text-4xl md:text-6xl font-bold">
@@ -28,6 +29,7 @@ const AboutPage = () => (
           </h1>
           <p className="text-lg text-muted-foreground">We're on a mission to make AI-powered healthcare accessible, efficient, and human-centered.</p>
         </motion.div>
+        <AboutScene />
       </div>
     </section>
 
