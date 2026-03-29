@@ -2,109 +2,127 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Suspense, useRef, useMemo } from "react";
 import * as THREE from "three";
 
-const HeartbeatWave = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
+const Heart = () => {
+  const groupRef = useRef<THREE.Group>(null);
 
-  const geometry = useMemo(() => {
-    const points = 200;
-    const positions = new Float32Array(points * 3);
-    const width = 10;
+  // Heart shape using parametric equation
+  const heartNodes = useMemo(() => {
+    const nodes: [number, number, number][] = [];
+    const layers = 20;
+    const pointsPerLayer = 20;
 
-    for (let i = 0; i < points; i++) {
-      const t = i / points;
-      positions[i * 3] = t * width - width / 2;
-      positions[i * 3 + 1] = 0;
-      positions[i * 3 + 2] = 0;
+    for (let l = 0; l < layers; l++) {
+      const v = (l / layers) * Math.PI;
+      for (let p = 0; p < pointsPerLayer; p++) {
+        const u = (p / pointsPerLayer) * Math.PI * 2;
+        const scale = 0.07;
+
+        // Heart parametric surface
+        const x = scale * 16 * Math.pow(Math.sin(u), 3) * Math.sin(v);
+        const y = scale * (13 * Math.cos(u) - 5 * Math.cos(2 * u) - 2 * Math.cos(3 * u) - Math.cos(4 * u)) * Math.sin(v);
+        const z = scale * 16 * Math.pow(Math.sin(u), 3) * Math.cos(v) * 0.3;
+
+        if (Math.random() > 0.4) {
+          nodes.push([x, y, z]);
+        }
+      }
     }
-
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    return geo;
+    return nodes;
   }, []);
+
+  // Arteries/veins
+  const vessels = useMemo(() => {
+    const lines: THREE.Line[] = [];
+    for (let i = 0; i < heartNodes.length; i++) {
+      for (let j = i + 1; j < heartNodes.length; j++) {
+        const dist = Math.sqrt(
+          (heartNodes[i][0] - heartNodes[j][0]) ** 2 +
+          (heartNodes[i][1] - heartNodes[j][1]) ** 2 +
+          (heartNodes[i][2] - heartNodes[j][2]) ** 2
+        );
+        if (dist < 0.25 && Math.random() > 0.7) {
+          const geo = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(...heartNodes[i]),
+            new THREE.Vector3(...heartNodes[j]),
+          ]);
+          lines.push(
+            new THREE.Line(geo, new THREE.LineBasicMaterial({ color: "#f87171", transparent: true, opacity: 0.12 }))
+          );
+        }
+      }
+    }
+    return lines;
+  }, [heartNodes]);
 
   useFrame((state) => {
-    if (!geometry) return;
-    const pos = geometry.attributes.position;
+    if (!groupRef.current) return;
     const t = state.clock.elapsedTime;
-    const points = pos.count;
+    groupRef.current.rotation.y = t * 0.15;
 
-    for (let i = 0; i < points; i++) {
-      const x = pos.getX(i);
-      const normalizedX = (x + 5) / 10;
-
-      // ECG-style heartbeat pattern
-      const phase = (normalizedX * 4 + t * 1.5) % 1;
-      let y = 0;
-
-      if (phase > 0.35 && phase < 0.4) y = -0.3;
-      else if (phase > 0.4 && phase < 0.45) y = 1.2;
-      else if (phase > 0.45 && phase < 0.5) y = -0.5;
-      else if (phase > 0.5 && phase < 0.55) y = 0.3;
-      else y = Math.sin(phase * Math.PI * 2) * 0.02;
-
-      pos.setY(i, y);
-    }
-    pos.needsUpdate = true;
+    // Heartbeat scale pulse
+    const beat = 1 + Math.pow(Math.sin(t * 2.5), 20) * 0.08;
+    groupRef.current.scale.setScalar(beat);
   });
 
-  const glowSpheres = useMemo(() => {
-    const arr: number[] = [];
-    for (let i = 0; i < 8; i++) {
-      arr.push(i);
-    }
-    return arr;
-  }, []);
-
   return (
-    <group>
-      <primitive
-        object={
-          new THREE.Line(
-            geometry,
-            new THREE.LineBasicMaterial({ color: "#34d399", linewidth: 2 })
-          )
-        }
-      />
-      {/* Pulse glow points along the wave */}
-      {glowSpheres.map((i) => (
-        <PulsePoint key={i} index={i} />
+    <group ref={groupRef} position={[0, -0.3, 0]}>
+      {heartNodes.map((pos, i) => (
+        <mesh key={i} position={pos}>
+          <sphereGeometry args={[0.04, 6, 6]} />
+          <meshStandardMaterial
+            color="#ef4444"
+            emissive="#ef4444"
+            emissiveIntensity={0.6}
+            transparent
+            opacity={0.7}
+          />
+        </mesh>
+      ))}
+
+      {/* Aorta top */}
+      <mesh position={[0, 1.3, 0]}>
+        <cylinderGeometry args={[0.08, 0.15, 0.5, 12]} />
+        <meshStandardMaterial color="#dc2626" emissive="#dc2626" emissiveIntensity={0.5} transparent opacity={0.5} />
+      </mesh>
+
+      {/* Pulse glow */}
+      <PulseGlow />
+
+      {vessels.map((v, i) => (
+        <primitive key={`v-${i}`} object={v} />
       ))}
     </group>
   );
 };
 
-const PulsePoint = ({ index }: { index: number }) => {
+const PulseGlow = () => {
   const ref = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
     if (!ref.current) return;
     const t = state.clock.elapsedTime;
-    const x = ((index / 8) * 10 - 5 + t * 1.5) % 10 - 5;
-    const phase = ((x + 5) / 10 * 4) % 1;
-    let y = 0;
-    if (phase > 0.4 && phase < 0.45) y = 1.2;
-    else if (phase > 0.45 && phase < 0.5) y = -0.5;
-    ref.current.position.set(x, y, 0);
-    const scale = 0.8 + Math.sin(t * 3 + index) * 0.3;
-    ref.current.scale.setScalar(scale);
+    const pulse = Math.pow(Math.sin(t * 2.5), 20);
+    (ref.current.material as THREE.MeshStandardMaterial).opacity = 0.1 + pulse * 0.2;
+    const s = 1.5 + pulse * 0.3;
+    ref.current.scale.setScalar(s);
   });
 
   return (
-    <mesh ref={ref}>
-      <sphereGeometry args={[0.05, 8, 8]} />
-      <meshStandardMaterial color="#34d399" emissive="#34d399" emissiveIntensity={1.5} transparent opacity={0.7} />
+    <mesh ref={ref} position={[0, 0.3, 0]}>
+      <sphereGeometry args={[0.8, 16, 16]} />
+      <meshStandardMaterial color="#ef4444" emissive="#ef4444" emissiveIntensity={1} transparent opacity={0.1} />
     </mesh>
   );
 };
 
 const ClientsScene = () => (
   <div className="w-full h-[300px]">
-    <Canvas camera={{ position: [0, 1, 6], fov: 45 }}>
+    <Canvas camera={{ position: [0, 0.5, 4], fov: 45 }}>
       <Suspense fallback={null}>
         <ambientLight intensity={0.1} />
-        <pointLight position={[5, 5, 5]} intensity={0.6} color="#34d399" />
-        <pointLight position={[-5, 0, 3]} intensity={0.3} color="#06b6d4" />
-        <HeartbeatWave />
+        <pointLight position={[3, 3, 3]} intensity={0.8} color="#ef4444" />
+        <pointLight position={[-3, -1, -3]} intensity={0.4} color="#f87171" />
+        <Heart />
       </Suspense>
     </Canvas>
   </div>
