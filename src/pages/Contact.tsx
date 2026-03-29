@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import Layout from "@/components/Layout";
+import ContactScene from "@/components/scenes/ContactScene";
 import { Mail, Phone, MapPin, Send, Calendar } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -23,9 +24,9 @@ const ContactPage = () => {
 
   return (
     <Layout>
-      <section className="section-padding hero-gradient relative">
+      <section className="hero-gradient relative overflow-hidden">
         <div className="grid-bg absolute inset-0 opacity-20" />
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 relative z-10 pt-16 pb-8">
           <motion.div {...fadeUp} className="text-center max-w-3xl mx-auto space-y-6">
             <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5">Get In Touch</span>
             <h1 className="font-display text-4xl md:text-6xl font-bold">
@@ -33,6 +34,7 @@ const ContactPage = () => {
             </h1>
             <p className="text-lg text-muted-foreground">Schedule a demo, ask questions, or explore how Healthora can transform your practice.</p>
           </motion.div>
+          <ContactScene />
         </div>
       </section>
 
