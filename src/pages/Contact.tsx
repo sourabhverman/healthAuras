@@ -62,9 +62,9 @@ const ContactPage = () => {
                 <h3 className="font-display text-2xl font-bold mb-6">Contact Information</h3>
                 <div className="space-y-5">
                   {[
-                    { icon: Mail, label: "Email", value: "hello@healthauras.com" },
-                    { icon: Phone, label: "Phone", value: "+1 (888) 555-0123" },
-                    { icon: MapPin, label: "Office", value: "San Francisco, CA" },
+                    { icon: Mail, label: "Email", value: "hello@healthauras.software" },
+                    { icon: Phone, label: "Phone", value: "+91 8770508997" },
+                    { icon: MapPin, label: "Office", value: "Indore, MP" },
                   ].map((c, i) => (
                     <div key={i} className="flex items-start gap-4">
                       <div className="w-10 h-10 rounded-lg bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center flex-shrink-0">
