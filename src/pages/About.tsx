@@ -97,7 +97,7 @@ const AboutPage = () => (
             <BookOpen className="w-7 h-7 text-emerald-400" />
           </div>
           <div className="space-y-4 text-muted-foreground leading-relaxed">
-            <p>HealthAura is a new healthcare AI startup built by IIIT and VIT students and collaborators who share a common frustration: too many clinical tools still feel decades behind.</p>
+            <p>Healthora is a new healthcare AI startup built by IIIT and VIT students and collaborators who share a common frustration: too many clinical tools still feel decades behind.</p>
             <p>We began by prototyping an AI scheduling assistant, then expanded based on early partner feedback — reducing administrative load, simplifying documentation, and untangling operational and billing workflows across clinics, pharmacies, and pharma operations.</p>
             <p>Now we’re building a future-ready platform: privacy-first, interoperability-focused (FHIR-ready), and designed to meet real-world healthcare and pharma industry needs — so clinicians can spend more time on what matters most: their patients.</p>
           </div>
