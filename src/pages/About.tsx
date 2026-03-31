@@ -29,7 +29,7 @@ const AboutPage = () => (
           <motion.div {...fadeUp} className="space-y-7">
             <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-emerald-400 px-4 py-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/5">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              About HealthAura
+              About Healthora
             </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.08]">
               Redefining <span className="glow-text">Healthcare</span> Technology
