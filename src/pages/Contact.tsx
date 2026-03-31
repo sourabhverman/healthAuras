@@ -41,7 +41,7 @@ const ContactPage = () => {
                 Let's <span className="glow-text">Connect</span>
               </h1>
               <p className="text-muted-foreground text-lg max-w-lg leading-relaxed">
-                Schedule a demo, ask questions, or explore how Healthora can transform your practice.
+                Schedule a demo, ask questions, or explore how HealthAuras can transform your practice.
               </p>
             </motion.div>
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 0.3 }}>
@@ -62,7 +62,7 @@ const ContactPage = () => {
                 <h3 className="font-display text-2xl font-bold mb-6">Contact Information</h3>
                 <div className="space-y-5">
                   {[
-                    { icon: Mail, label: "Email", value: "hello@healthora.com" },
+                    { icon: Mail, label: "Email", value: "hello@healthauras.com" },
                     { icon: Phone, label: "Phone", value: "+1 (888) 555-0123" },
                     { icon: MapPin, label: "Office", value: "San Francisco, CA" },
                   ].map((c, i) => (
