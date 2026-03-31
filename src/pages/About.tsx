@@ -29,7 +29,7 @@ const AboutPage = () => (
           <motion.div {...fadeUp} className="space-y-7">
             <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-emerald-400 px-4 py-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/5">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              About Healthora
+              About HealthAura
             </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.08]">
               Redefining <span className="glow-text">Healthcare</span> Technology
@@ -97,9 +97,9 @@ const AboutPage = () => (
             <BookOpen className="w-7 h-7 text-emerald-400" />
           </div>
           <div className="space-y-4 text-muted-foreground leading-relaxed">
-            <p>Healthora was founded in 2022 by a team of physicians, AI researchers, and healthcare technologists who shared a common frustration: the tools available to healthcare providers were decades behind what modern technology could offer.</p>
-            <p>Starting with a simple AI-powered scheduling assistant, we quickly expanded into a comprehensive platform as providers told us about their biggest pain points — from drowning in paperwork to struggling with billing complexities.</p>
-            <p>Today, Healthora serves thousands of healthcare providers across 30+ countries, processing millions of patient interactions and helping clinicians spend more time on what matters most: their patients.</p>
+            <p>HealthAura is a new healthcare AI startup built by IIIT and VIT students and collaborators who share a common frustration: too many clinical tools still feel decades behind.</p>
+            <p>We began by prototyping an AI scheduling assistant, then expanded based on early partner feedback — reducing administrative load, simplifying documentation, and untangling operational and billing workflows across clinics, pharmacies, and pharma operations.</p>
+            <p>Now we’re building a future-ready platform: privacy-first, interoperability-focused (FHIR-ready), and designed to meet real-world healthcare and pharma industry needs — so clinicians can spend more time on what matters most: their patients.</p>
           </div>
         </motion.div>
       </div>
@@ -148,15 +148,15 @@ const AboutPage = () => (
             Our Impact
           </span>
           <h2 className="font-display text-3xl md:text-5xl font-bold">
-            Numbers That <span className="glow-text">Matter</span>
+            Principles That <span className="glow-text">Matter</span>
           </h2>
         </motion.div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
           {[
-            { value: "30+", label: "Countries" },
-            { value: "5K+", label: "Providers" },
-            { value: "10M+", label: "Patient Interactions" },
-            { value: "99.9%", label: "Uptime" },
+            { value: "Clinician-Led", label: "Built With Providers" },
+            { value: "FHIR-Ready", label: "Interoperability" },
+            { value: "Privacy-First", label: "Data Protection" },
+            { value: "Built to Scale", label: "Future-Proof Architecture" },
           ].map((s, i) => (
             <motion.div key={i} {...fadeUp} transition={{ delay: i * 0.1 }} className="glass-card p-8 text-center">
               <div className="font-display text-3xl md:text-4xl font-bold glow-text mb-2">{s.value}</div>
@@ -175,7 +175,7 @@ const AboutPage = () => (
             Join the <span className="glow-text">Healthcare Revolution</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            Discover how Healthora can transform your practice with intelligent, end-to-end solutions.
+            Discover how HealthAura can transform your practice with intelligent, end-to-end solutions.
           </p>
           <div className="flex flex-wrap justify-center gap-4 pt-2">
             <Link to="/contact" className="btn-primary-glow inline-flex items-center gap-2">

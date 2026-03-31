@@ -2,13 +2,12 @@ import { motion } from "framer-motion";
 import Layout from "@/components/Layout";
 import PartnersScene from "@/components/scenes/PartnersScene";
 import DataFlowBg from "@/components/scenes/DataFlowBg";
-import NeuralNetworkBg from "@/components/scenes/NeuralNetworkBg";
 import SpineFlowBg from "@/components/scenes/SpineFlowBg";
 import EcosystemBg from "@/components/scenes/EcosystemBg";
 import { Link } from "react-router-dom";
 import {
-  FlaskConical, Microscope, Plug, Database, Cloud, Lock,
-  ArrowRight, Code2, Globe, Handshake, Building, Cpu
+  FlaskConical, Microscope, Database, Cloud,
+  ArrowRight, Handshake, Building, Cpu
 } from "lucide-react";
 
 const fadeUp = {
@@ -87,38 +86,6 @@ const PartnersPage = () => (
       </div>
     </section>
 
-    {/* ─── API PLATFORM ─── */}
-    <section className="relative min-h-screen flex items-center py-24">
-      <NeuralNetworkBg />
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div {...fadeUp} className="text-center mb-16 space-y-4">
-          <span className="inline-block text-[11px] font-semibold tracking-widest uppercase text-emerald-400/80 px-3 py-1 rounded-full border border-emerald-400/20 bg-emerald-400/5">
-            API Platform
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold">
-            Developer-First <span className="glow-text">Integration</span>
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">Build custom integrations with our comprehensive API platform.</p>
-        </motion.div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-          {[
-            { icon: Code2, title: "RESTful API", desc: "Clean, well-documented REST endpoints for all platform features." },
-            { icon: Plug, title: "Webhooks", desc: "Real-time event notifications for appointment changes, results, and alerts." },
-            { icon: Lock, title: "OAuth 2.0", desc: "Industry-standard authentication with fine-grained permission controls." },
-            { icon: Database, title: "FHIR Standard", desc: "Full HL7 FHIR R4 compliance for healthcare data interoperability." },
-          ].map((f, i) => (
-            <motion.div key={i} {...fadeUp} transition={{ delay: i * 0.1 }} className="glass-card-hover p-6 text-center group">
-              <div className="w-12 h-12 rounded-xl bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-400/15 transition-colors">
-                <f.icon className="w-6 h-6 text-emerald-400" />
-              </div>
-              <h3 className="font-display font-semibold mb-2">{f.title}</h3>
-              <p className="text-xs text-muted-foreground">{f.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-
     {/* ─── PARTNERSHIP TYPES ─── */}
     <section className="relative min-h-[70vh] flex items-center py-24">
       <SpineFlowBg />
@@ -135,7 +102,7 @@ const PartnersPage = () => (
           {[
             { icon: Handshake, title: "Strategic Partners", desc: "Co-develop solutions and go-to-market strategies for healthcare innovation." },
             { icon: Cpu, title: "Technology Partners", desc: "Integrate your technology stack with our platform for enhanced capabilities." },
-            { icon: Building, title: "Channel Partners", desc: "Resell and distribute Healthora solutions to your healthcare network." },
+            { icon: Building, title: "Channel Partners", desc: "Resell and distribute HealthAura solutions to your healthcare network." },
           ].map((p, i) => (
             <motion.div key={i} {...fadeUp} transition={{ delay: i * 0.1 }} className="glass-card-hover p-8 text-center group">
               <div className="w-14 h-14 rounded-xl bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center mx-auto mb-5 group-hover:bg-emerald-400/15 transition-colors">

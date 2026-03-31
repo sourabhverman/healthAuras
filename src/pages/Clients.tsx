@@ -35,7 +35,7 @@ const ClientsPage = () => (
               Built for <span className="glow-text">Every Practice</span>
             </h1>
             <p className="text-muted-foreground text-lg max-w-lg leading-relaxed">
-              From solo clinics to hospital networks, Healthora adapts to your unique workflow and scales with your growth.
+              From solo clinics to hospital networks, HealthAura adapts to your unique workflow and scales with your growth.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link to="/contact" className="btn-primary-glow inline-flex items-center gap-2">
@@ -64,7 +64,7 @@ const ClientsPage = () => (
           <h2 className="font-display text-3xl md:text-5xl font-bold">
             From Challenges to <span className="glow-text">Solutions</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">See how Healthora transforms common healthcare pain points into competitive advantages.</p>
+          <p className="text-muted-foreground max-w-2xl mx-auto">See how HealthAura transforms common healthcare pain points into competitive advantages.</p>
         </motion.div>
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {[
@@ -141,7 +141,7 @@ const ClientsPage = () => (
           <h2 className="font-display text-3xl md:text-5xl font-bold">
             Measurable <span className="glow-text">Impact</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">Real results from real healthcare providers using Healthora.</p>
+          <p className="text-muted-foreground max-w-2xl mx-auto">Real results from real healthcare providers using HealthAura.</p>
         </motion.div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
           {[
