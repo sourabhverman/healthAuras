@@ -7,8 +7,8 @@ const Footer = () => (
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
         <div className="space-y-4">
           <Link to="/" className="flex items-center gap-2.5">
-            <img src={healthoraIcon} alt="Healthora" className="w-8 h-8 rounded-lg" />
-            <span className="font-display font-bold text-lg">Health<span className="text-emerald-400">ora</span></span>
+            <img src={healthoraIcon} alt="HealthAuras" className="w-8 h-8 rounded-lg" />
+            <span className="font-display font-bold text-lg">Health<span className="text-emerald-400">Auras</span></span>
           </Link>
           <p className="text-sm text-muted-foreground leading-relaxed">
             Transforming healthcare with intelligent AI solutions for clinics, hospitals, and medical practices worldwide.
@@ -34,7 +34,7 @@ const Footer = () => (
         ))}
       </div>
       <div className="mt-12 pt-8 border-t border-border/50 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} Healthora. All rights reserved.
+        © {new Date().getFullYear()} HealthAuras. All rights reserved.
       </div>
     </div>
   </footer>

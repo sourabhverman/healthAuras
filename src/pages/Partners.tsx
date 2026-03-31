@@ -102,7 +102,7 @@ const PartnersPage = () => (
           {[
             { icon: Handshake, title: "Strategic Partners", desc: "Co-develop solutions and go-to-market strategies for healthcare innovation." },
             { icon: Cpu, title: "Technology Partners", desc: "Integrate your technology stack with our platform for enhanced capabilities." },
-            { icon: Building, title: "Channel Partners", desc: "Resell and distribute Healthora solutions to your healthcare network." },
+            { icon: Building, title: "Channel Partners", desc: "Resell and distribute HealthAuras solutions to your healthcare network." },
           ].map((p, i) => (
             <motion.div key={i} {...fadeUp} transition={{ delay: i * 0.1 }} className="glass-card-hover p-8 text-center group">
               <div className="w-14 h-14 rounded-xl bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center mx-auto mb-5 group-hover:bg-emerald-400/15 transition-colors">

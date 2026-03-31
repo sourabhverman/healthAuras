@@ -198,7 +198,7 @@ const Index = () => (
         <motion.div {...fadeUp} className="glass-card p-10 md:p-14 max-w-4xl mx-auto grid md:grid-cols-[1fr_1fr] gap-10 items-center">
           <div className="space-y-5">
             <span className="inline-block text-[11px] font-semibold tracking-widest uppercase text-emerald-400/80 px-3 py-1 rounded-full border border-emerald-400/20 bg-emerald-400/5">
-              Why Healthora
+              Why HealthAuras
             </span>
             <h2 className="font-display text-2xl md:text-4xl font-bold">
               Built for <span className="glow-text">Real Healthcare</span>
