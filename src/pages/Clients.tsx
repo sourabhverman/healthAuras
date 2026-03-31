@@ -35,7 +35,7 @@ const ClientsPage = () => (
               Built for <span className="glow-text">Every Practice</span>
             </h1>
             <p className="text-muted-foreground text-lg max-w-lg leading-relaxed">
-              From solo clinics to hospital networks, HealthAura adapts to your unique workflow and scales with your growth.
+              From solo clinics to hospital networks, Healthora adapts to your unique workflow and scales with your growth.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link to="/contact" className="btn-primary-glow inline-flex items-center gap-2">
