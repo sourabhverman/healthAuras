@@ -1,3 +1,1 @@
-# Welcome to your Lovable project
-
-TODO: Document your project here
+# HealthAura, an AI-Solution Designed for the Pharma Industry
