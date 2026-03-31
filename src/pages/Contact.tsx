@@ -41,7 +41,7 @@ const ContactPage = () => {
                 Let's <span className="glow-text">Connect</span>
               </h1>
               <p className="text-muted-foreground text-lg max-w-lg leading-relaxed">
-                Schedule a demo, ask questions, or explore how HealthAura can transform your practice.
+                Schedule a demo, ask questions, or explore how Healthora can transform your practice.
               </p>
             </motion.div>
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 0.3 }}>
