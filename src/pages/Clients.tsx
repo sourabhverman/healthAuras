@@ -64,7 +64,7 @@ const ClientsPage = () => (
           <h2 className="font-display text-3xl md:text-5xl font-bold">
             From Challenges to <span className="glow-text">Solutions</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">See how HealthAura transforms common healthcare pain points into competitive advantages.</p>
+          <p className="text-muted-foreground max-w-2xl mx-auto">See how Healthora transforms common healthcare pain points into competitive advantages.</p>
         </motion.div>
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {[
