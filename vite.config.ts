@@ -10,19 +10,31 @@ export default defineConfig(({ mode }) => {
 
   return {
     base,
-  server: {
-    host: "::",
-    port: 8080,
-    hmr: {
-      overlay: false,
+    server: {
+      host: "::",
+      port: 8080,
+      hmr: {
+        overlay: false,
+      },
     },
-  },
-  plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
+    plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+      },
+      dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
     },
-    dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
-  },
+    build: {
+      rollupOptions: {
+        input: {
+          main:     path.resolve(__dirname, "index.html"),
+          products: path.resolve(__dirname, "products/index.html"),
+          about:    path.resolve(__dirname, "about/index.html"),
+          clients:  path.resolve(__dirname, "clients/index.html"),
+          partners: path.resolve(__dirname, "partners/index.html"),
+          contact:  path.resolve(__dirname, "contact/index.html"),
+        },
+      },
+    },
   };
 });
