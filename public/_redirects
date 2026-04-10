@@ -1,3 +1,1 @@
-# Cloudflare Pages — SPA catch-all
-# Functions in /functions/api/* take priority over this rule automatically.
 /* /index.html 200

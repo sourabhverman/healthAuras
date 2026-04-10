@@ -79,6 +79,20 @@
       ]
     }
     </script>
+
+    <!-- SPA fallback: restore URL encoded by 404.html via ?p= -->
+    <script>
+      (function () {
+        try {
+          var params = new URLSearchParams(window.location.search);
+          var p = params.get('p');
+          if (p) {
+            var url = decodeURIComponent(p);
+            window.history.replaceState(null, '', url);
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
 
   <body>
