@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { usePageSEO } from "@/hooks/use-page-seo";
 import Layout from "@/components/Layout";
 import ContactScene from "@/components/scenes/ContactScene";
 import HeartbeatBg from "@/components/scenes/HeartbeatBg";
@@ -15,6 +16,12 @@ const fadeUp = {
 };
 
 const ContactPage = () => {
+  usePageSEO({
+    title: "Contact HealthAuras — Book a Demo or Talk to Our Team",
+    description: "Get in touch with HealthAuras for product demos, pricing, or support. Talk to our team about AI Receptionist, Clinic Management, or Hospital ERP solutions.",
+    keywords: "contact HealthAuras, book demo healthcare software, clinic software demo, hospital ERP demo, healthcare AI support, healthauras contact",
+    canonical: "https://healthauras.software/contact",
+  });
   const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", company: "", product: "", message: "", type: "demo" });
   const [loading, setLoading] = useState(false);
@@ -33,7 +40,7 @@ const ContactPage = () => {
         body: JSON.stringify({
           from: "HealthAuras <hello@healthauras.software>",
           to: [form.email],
-          cc: ["hello@healthauras.software"],
+          cc: ["hello@healthauras.software", "sourabhverma@healthauras.software"],
           subject: `Thank you for contacting HealthAuras - Request Received`,
           html: `
             <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #020817; border-radius: 16px; overflow: hidden; border: 1px solid #1e293b; color: #f8fafc;">

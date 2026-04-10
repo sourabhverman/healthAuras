@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { usePageSEO } from "@/hooks/use-page-seo";
 import Layout from "@/components/Layout";
 import SectionHeading from "@/components/SectionHeading";
 import ProductHeroScene from "@/components/scenes/ProductHeroScene";
@@ -78,7 +79,14 @@ const addons = [
   },
 ];
 
-const ProductsPage = () => (
+const ProductsPage = () => {
+  usePageSEO({
+    title: "AI Healthcare Products — AI Receptionist, Clinic Software, Hospital ERP | HealthAuras",
+    description: "Explore HealthAuras products: AI Receptionist for small clinics, Clinic Management System for growing practices, and full Hospital ERP. Automated scheduling, billing, EMR, WhatsApp & SMS.",
+    keywords: "AI receptionist for clinics, clinic management software, hospital ERP software, medical billing automation, smart appointment scheduling, WhatsApp SMS healthcare, EMR software India, healthcare AI products, doctor appointment system, healthauras products",
+    canonical: "https://healthauras.software/products",
+  });
+  return (
   <Layout>
     {/* Hero */}
     <section className="relative overflow-hidden min-h-[60vh] flex items-center">
@@ -201,6 +209,7 @@ const ProductsPage = () => (
       </div>
     </section>
   </Layout>
-);
+  );
+};
 
 export default ProductsPage;

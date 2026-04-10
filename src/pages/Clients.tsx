@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { usePageSEO } from "@/hooks/use-page-seo";
 import Layout from "@/components/Layout";
 import ClientsScene from "@/components/scenes/ClientsScene";
 import NeuralNetworkBg from "@/components/scenes/NeuralNetworkBg";
@@ -18,7 +19,14 @@ const fadeUp = {
   transition: { duration: 0.6 },
 };
 
-const ClientsPage = () => (
+const ClientsPage = () => {
+  usePageSEO({
+    title: "For Healthcare Providers — Clinics, Hospitals & Medical Practices | HealthAuras",
+    description: "HealthAuras adapts to every healthcare workflow: from solo clinics and multi-specialty centres to large hospital networks. Scale your practice with AI-powered management tools.",
+    keywords: "clinic management, hospital management software, medical practice management, multi-specialty clinic, healthcare provider software, AI for hospitals, doctor practice software India, patient management",
+    canonical: "https://healthauras.software/clients",
+  });
+  return (
   <Layout>
     {/* ─── HERO ─── */}
     <section className="relative overflow-hidden min-h-screen flex items-center">
@@ -179,6 +187,7 @@ const ClientsPage = () => (
       </div>
     </section>
   </Layout>
-);
+  );
+};
 
 export default ClientsPage;

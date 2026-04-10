@@ -21,19 +21,63 @@
     <meta name="twitter:description" content="Number one AI healthcare suite. Revolutionize your hospital and clinic management with our advanced AI tools, medical receptionist, and smart billing." />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
-    <script>
-      (function () {
-        try {
-          const params = new URLSearchParams(window.location.search);
-          const p = params.get("p");
-          if (p) {
-            const url = decodeURIComponent(p);
-            window.history.replaceState(null, "", url);
+    <!-- JSON-LD: Organization + WebSite + MedicalBusiness structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://healthauras.software/#organization",
+          "name": "HealthAuras",
+          "url": "https://healthauras.software/",
+          "logo": "https://healthauras.software/healthora-favicon.png",
+          "email": "hello@healthauras.software",
+          "description": "AI-powered healthcare platform providing clinic management, hospital ERP, AI receptionist, smart scheduling, automated billing, and EMR solutions.",
+          "sameAs": [],
+          "foundingDate": "2024",
+          "areaServed": ["IN", "US", "GB", "AE", "SG"],
+          "knowsAbout": [
+            "Clinic Management Software",
+            "Hospital ERP",
+            "AI Medical Receptionist",
+            "Electronic Health Records",
+            "Medical Billing Automation",
+            "Healthcare AI",
+            "Patient Scheduling",
+            "Telemedicine"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://healthauras.software/#website",
+          "url": "https://healthauras.software/",
+          "name": "HealthAuras",
+          "description": "AI-Powered Healthcare & Clinic Management Platform",
+          "publisher": { "@id": "https://healthauras.software/#organization" },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://healthauras.software/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
           }
-        } catch {
-          // no-op
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://healthauras.software/#software",
+          "name": "HealthAuras Platform",
+          "applicationCategory": "HealthApplication",
+          "operatingSystem": "Web",
+          "url": "https://healthauras.software/products",
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "INR",
+            "availability": "https://schema.org/InStock"
+          },
+          "provider": { "@id": "https://healthauras.software/#organization" },
+          "description": "End-to-end AI healthcare suite: AI Receptionist, Clinic Management System, Hospital ERP, smart scheduling, and automated medical billing."
         }
-      })();
+      ]
+    }
     </script>
   </head>
 

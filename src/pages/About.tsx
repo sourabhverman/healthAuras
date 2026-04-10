@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { usePageSEO } from "@/hooks/use-page-seo";
 import Layout from "@/components/Layout";
 import AboutScene from "@/components/scenes/AboutScene";
 import NeuralNetworkBg from "@/components/scenes/NeuralNetworkBg";
@@ -18,7 +19,14 @@ const fadeUp = {
   transition: { duration: 0.6 },
 };
 
-const AboutPage = () => (
+const AboutPage = () => {
+  usePageSEO({
+    title: "About HealthAuras — AI Healthcare Technology Company",
+    description: "HealthAuras is on a mission to make AI-powered clinic and hospital management accessible for every healthcare provider globally. Learn about our story, vision, and values.",
+    keywords: "about HealthAuras, AI healthcare company, healthcare technology startup India, clinic automation company, hospital software company, health tech, medical AI, health auras",
+    canonical: "https://healthauras.software/about",
+  });
+  return (
   <Layout>
     {/* ─── HERO ─── */}
     <section className="relative overflow-hidden min-h-screen flex items-center">
@@ -189,6 +197,7 @@ const AboutPage = () => (
       </div>
     </section>
   </Layout>
-);
+  );
+};
 
 export default AboutPage;

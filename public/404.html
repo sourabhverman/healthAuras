@@ -3,21 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Redirecting…</title>
-    <script>
-      (function () {
-        const path = window.location.pathname + window.location.search + window.location.hash;
-        const segments = window.location.pathname.split("/").filter(Boolean);
-
-        let base = "/";
-        if (window.location.hostname.endsWith("github.io") && segments.length > 0) {
-          base = "/" + segments[0] + "/";
-        }
-
-        const target = base + "?p=" + encodeURIComponent(path);
-        window.location.replace(target);
-      })();
-    </script>
+    <title>Page Not Found — HealthAuras</title>
+    <meta name="description" content="The page you are looking for does not exist. Return to HealthAuras — India's leading AI-powered healthcare platform." />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href="https://healthauras.software/" />
+    <style>
+      body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #020817; color: #f8fafc; display: flex; align-items: center; justify-content: center; min-height: 100vh; text-align: center; }
+      h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+      p  { color: #94a3b8; margin-bottom: 1.5rem; }
+      a  { display: inline-block; background: #10b981; color: #fff; padding: 0.6rem 1.4rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <div>
+      <h1>404 — Page Not Found</h1>
+      <p>The page you're looking for doesn't exist.</p>
+      <a href="/">Go to HealthAuras Home</a>
+    </div>
+  </body>
 </html>

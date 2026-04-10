@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { usePageSEO } from "@/hooks/use-page-seo";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import HeroScene from "@/components/HeroScene";
@@ -21,7 +22,14 @@ const fadeUp = {
   transition: { duration: 0.6 },
 };
 
-const Index = () => (
+const Index = () => {
+  usePageSEO({
+    title: "HealthAuras — AI-Powered Healthcare & Clinic Management Platform",
+    description: "India's leading AI healthcare platform: AI Receptionist, Clinic Management System, Hospital ERP, smart scheduling, automated billing & EMR. Trusted by clinics and hospitals worldwide.",
+    keywords: "AI healthcare software, clinic management system, hospital ERP, AI receptionist, patient scheduling software, medical billing software, EMR, EHR, digital health India, healthcare automation, medical practice management, appointment booking, telehealth, healthauras",
+    canonical: "https://healthauras.software/",
+  });
+  return (
   <Layout>
     {/* ─── HERO ─── */}
     <section className="relative overflow-hidden min-h-screen flex items-center">
@@ -249,6 +257,7 @@ const Index = () => (
       </div>
     </section>
   </Layout>
-);
+  );
+};
 
 export default Index;

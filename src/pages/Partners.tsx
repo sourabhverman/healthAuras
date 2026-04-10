@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { usePageSEO } from "@/hooks/use-page-seo";
 import Layout from "@/components/Layout";
 import PartnersScene from "@/components/scenes/PartnersScene";
 import DataFlowBg from "@/components/scenes/DataFlowBg";
@@ -17,7 +18,14 @@ const fadeUp = {
   transition: { duration: 0.6 },
 };
 
-const PartnersPage = () => (
+const PartnersPage = () => {
+  usePageSEO({
+    title: "Partner Ecosystem — Integrate & Collaborate with HealthAuras",
+    description: "Join HealthAuras' partner network. Connect with pharma, labs, cloud providers, and health-tech platforms through our open integration ecosystem.",
+    keywords: "HealthAuras partners, healthcare integration, health tech partnership, pharma software integration, lab system integration, cloud health platform, healthcare API, healthauras ecosystem",
+    canonical: "https://healthauras.software/partners",
+  });
+  return (
   <Layout>
     {/* ─── HERO ─── */}
     <section className="relative overflow-hidden min-h-screen flex items-center">
@@ -134,6 +142,7 @@ const PartnersPage = () => (
       </div>
     </section>
   </Layout>
-);
+  );
+};
 
 export default PartnersPage;
