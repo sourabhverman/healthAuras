@@ -4,148 +4,183 @@ import * as THREE from "three";
 
 const Brain = () => {
   const groupRef = useRef<THREE.Group>(null);
+  const nodeMeshes = useRef<THREE.Mesh[]>([]);
 
-  // Create brain shape with two hemispheres and surface folds
-  const { leftNodes, rightNodes, folds, synapses } = useMemo(() => {
-    const left: [number, number, number][] = [];
-    const right: [number, number, number][] = [];
-    const f: { pos: [number, number, number]; scale: number }[] = [];
-    const s: { start: [number, number, number]; end: [number, number, number] }[] = [];
+  const { cerebrumWire, cerebellumWire, stemMesh, nodePositions, cerebNodes } = useMemo(() => {
+    // ── CEREBRUM: deformed sphere with gyri-like noise ──
+    const cGeo = new THREE.SphereGeometry(1.0, 28, 22);
+    const cPos = cGeo.attributes.position;
+    const nodePos: [number, number, number][] = [];
 
-    // Generate hemisphere nodes
-    for (let i = 0; i < 120; i++) {
-      const phi = Math.acos(2 * Math.random() - 1);
-      const theta = Math.random() * Math.PI * 2;
-      const r = 1.2 + Math.random() * 0.15;
-      const x = r * Math.sin(phi) * Math.cos(theta);
-      const y = r * Math.cos(phi) * 0.85;
-      const z = r * Math.sin(phi) * Math.sin(theta);
+    for (let i = 0; i < cPos.count; i++) {
+      const ox = cPos.getX(i), oy = cPos.getY(i), oz = cPos.getZ(i);
+      const r = Math.sqrt(ox * ox + oy * oy + oz * oz) || 1e-9;
+      const nx = ox / r, ny = oy / r, nz = oz / r;
 
-      if (x > 0.05) {
-        left.push([x + 0.15, y, z]);
-      } else if (x < -0.05) {
-        right.push([x - 0.15, y, z]);
+      // Flatten base (underside)
+      if (ny < -0.50) {
+        cPos.setXYZ(i, nx * 0.66, -0.40, nz * 0.56);
+        continue;
       }
+
+      // Gyri: layered high-frequency sinusoidal noise
+      const g =
+        0.046 * Math.sin(nx * 10.2 + ny * 7.1) * Math.cos(nz * 9.0 + ny * 4.6) +
+        0.022 * Math.cos(nx * 16.4 + nz * 13.8) * Math.sin(ny * 15.2) +
+        0.012 * Math.sin(nx * 22.0 + nz * 19.5);
+
+      const px = nx * 0.93 * (1 + g);
+      const py = ny * 0.79 * (1 + g * 0.45);
+      const pz = nz * 0.72 * (1 + g);
+
+      cPos.setXYZ(i, px, py, pz);
+      if (Math.random() > 0.58) nodePos.push([px, py, pz]);
     }
 
-    // Surface folds (sulci)
-    for (let i = 0; i < 30; i++) {
-      const phi = Math.acos(2 * Math.random() - 1);
-      const theta = Math.random() * Math.PI * 2;
-      const r = 1.25;
-      const x = r * Math.sin(phi) * Math.cos(theta);
-      const y = r * Math.cos(phi) * 0.85;
-      const z = r * Math.sin(phi) * Math.sin(theta);
-      const side = x > 0 ? 0.15 : -0.15;
-      f.push({ pos: [x + side, y, z], scale: 0.08 + Math.random() * 0.06 });
+    cGeo.computeVertexNormals();
+
+    const cerebrumWire = new THREE.LineSegments(
+      new THREE.EdgesGeometry(cGeo, 13),
+      new THREE.LineBasicMaterial({ color: "#0d9488", transparent: true, opacity: 0.42 })
+    );
+
+    // ── CEREBELLUM: smaller sphere with horizontal foliation ──
+    const cbGeo = new THREE.SphereGeometry(0.31, 18, 14);
+    const cbPos = cbGeo.attributes.position;
+    const cbNodes: [number, number, number][] = [];
+
+    for (let i = 0; i < cbPos.count; i++) {
+      const ox = cbPos.getX(i), oy = cbPos.getY(i), oz = cbPos.getZ(i);
+      const r = Math.sqrt(ox * ox + oy * oy + oz * oz) || 1e-9;
+      const nx = ox / r, ny = oy / r, nz = oz / r;
+      const fold = 0.038 * Math.sin(ny * 26);
+      const px = nx * 0.30 * (1 + fold);
+      const py = ny * 0.23 * (1 + fold);
+      const pz = nz * 0.30 * (1 + fold);
+      cbPos.setXYZ(i, px, py, pz);
+      if (Math.random() > 0.52) cbNodes.push([px, py, pz]);
     }
 
-    // Synaptic connections (internal lines)
-    const allNodes = [...left, ...right];
-    for (let i = 0; i < 40; i++) {
-      const a = Math.floor(Math.random() * allNodes.length);
-      const b = Math.floor(Math.random() * allNodes.length);
-      if (a !== b) {
-        s.push({ start: allNodes[a], end: allNodes[b] });
-      }
-    }
+    cbGeo.computeVertexNormals();
+    const cerebellumWire = new THREE.LineSegments(
+      new THREE.EdgesGeometry(cbGeo, 10),
+      new THREE.LineBasicMaterial({ color: "#14b8a6", transparent: true, opacity: 0.52 })
+    );
 
-    return { leftNodes: left, rightNodes: right, folds: f, synapses: s };
+    // ── BRAIN STEM ──
+    const stemMesh = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.085, 0.062, 0.52, 10),
+      new THREE.MeshStandardMaterial({
+        color: "#0f766e", emissive: "#0f766e",
+        emissiveIntensity: 0.5, transparent: true, opacity: 0.58, roughness: 0.38,
+      })
+    );
+    stemMesh.position.set(0, -0.96, 0.18);
+
+    return { cerebrumWire, cerebellumWire, stemMesh, nodePositions: nodePos, cerebNodes: cbNodes };
   }, []);
 
-  const synapseLines = useMemo(() => {
-    return synapses.map((syn) => {
-      const geo = new THREE.BufferGeometry().setFromPoints([
-        new THREE.Vector3(...syn.start),
-        new THREE.Vector3(...syn.end),
-      ]);
-      return new THREE.Line(
-        geo,
-        new THREE.LineBasicMaterial({ color: "#34d399", transparent: true, opacity: 0.08 })
-      );
-    });
-  }, [synapses]);
-
-  const pulseRefs = useRef<THREE.Mesh[]>([]);
+  const fireTimes = useRef<number[]>(nodePositions.map(() => -(Math.random() * 10)));
 
   useFrame((state) => {
     if (!groupRef.current) return;
-    groupRef.current.rotation.y = state.clock.elapsedTime * 0.12;
+    const t = state.clock.elapsedTime;
+    groupRef.current.rotation.y = t * 0.08;
 
-    // Pulse synaptic nodes
-    pulseRefs.current.forEach((mesh, i) => {
+    // Cerebral node firing
+    nodeMeshes.current.forEach((mesh, i) => {
       if (!mesh) return;
-      const t = state.clock.elapsedTime;
-      const s = 1 + Math.sin(t * 2 + i * 0.8) * 0.3;
-      mesh.scale.setScalar(s);
-      (mesh.material as THREE.MeshStandardMaterial).emissiveIntensity =
-        0.5 + Math.sin(t * 3 + i) * 0.5;
+      const mat = mesh.material as THREE.MeshStandardMaterial;
+
+      // Cerebellum nodes: gentle glow only
+      if (i >= nodePositions.length) {
+        mat.emissiveIntensity = 0.42 + Math.sin(t * 1.3 + i * 0.28) * 0.12;
+        return;
+      }
+
+      const delta = t - fireTimes.current[i];
+
+      if (delta >= 0 && delta < 0.28) {
+        // Firing: bright flash
+        const intensity = Math.sin((delta / 0.28) * Math.PI);
+        mat.emissiveIntensity = 0.8 + intensity * 4.2;
+        (mat.color as THREE.Color).set(intensity > 0.45 ? "#fef08a" : "#fbbf24");
+        mesh.scale.setScalar(1 + intensity * 0.55);
+      } else {
+        // Resting: organic pulse
+        mat.emissiveIntensity = 0.46 + Math.sin(t * 1.2 + i * 0.22) * 0.13;
+        (mat.color as THREE.Color).set(i % 3 === 0 ? "#fef08a" : "#fbbf24");
+        mesh.scale.setScalar(1);
+        if (delta > 3.5 && Math.random() < 0.0006) fireTimes.current[i] = t;
+      }
     });
   });
 
-  const allNodes = [...leftNodes, ...rightNodes];
-
   return (
-    <group ref={groupRef} position={[0, 0.2, 0]}>
-      {/* Brain hemispheres */}
-      {allNodes.map((pos, i) => (
-        <mesh
-          key={i}
-          ref={(el) => { if (el) pulseRefs.current[i] = el; }}
-          position={pos}
-        >
-          <sphereGeometry args={[0.045, 8, 8]} />
+    <group ref={groupRef} position={[0, 0.12, 0]}>
+      {/* Cerebrum wireframe mesh */}
+      <primitive object={cerebrumWire} />
+
+      {/* Cortical neuron dots */}
+      {nodePositions.map((p, i) => (
+        <mesh key={`n-${i}`} position={p}
+          ref={(el) => { if (el) nodeMeshes.current[i] = el; }}>
+          <sphereGeometry args={[0.021, 7, 7]} />
           <meshStandardMaterial
-            color="#34d399"
-            emissive="#34d399"
-            emissiveIntensity={0.6}
-            transparent
-            opacity={0.7}
+            color="#fbbf24" emissive="#fbbf24"
+            emissiveIntensity={0.50} transparent opacity={0.82}
+            roughness={0.22} metalness={0.18}
           />
         </mesh>
       ))}
 
-      {/* Surface folds */}
-      {folds.map((fold, i) => (
-        <mesh key={`f-${i}`} position={fold.pos}>
-          <sphereGeometry args={[fold.scale, 6, 6]} />
-          <meshStandardMaterial
-            color="#10b981"
-            emissive="#10b981"
-            emissiveIntensity={0.3}
-            transparent
-            opacity={0.4}
-          />
-        </mesh>
-      ))}
-
-      {/* Central fissure */}
-      <mesh position={[0, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[0.01, 0.01, 2.2, 8]} />
-        <meshStandardMaterial color="#06b6d4" emissive="#06b6d4" emissiveIntensity={1} transparent opacity={0.3} />
-      </mesh>
+      {/* Cerebellum */}
+      <group position={[0.10, -0.88, -0.38]}>
+        <primitive object={cerebellumWire} />
+        {cerebNodes.map((p, i) => (
+          <mesh key={`cb-${i}`} position={p}
+            ref={(el) => { if (el) nodeMeshes.current[nodePositions.length + i] = el; }}>
+            <sphereGeometry args={[0.020, 6, 6]} />
+            <meshStandardMaterial
+              color="#f59e0b" emissive="#f59e0b"
+              emissiveIntensity={0.44} transparent opacity={0.78}
+              roughness={0.24} metalness={0.20}
+            />
+          </mesh>
+        ))}
+      </group>
 
       {/* Brain stem */}
-      <mesh position={[0, -1.1, 0.2]}>
-        <cylinderGeometry args={[0.12, 0.08, 0.6, 12]} />
-        <meshStandardMaterial color="#34d399" emissive="#34d399" emissiveIntensity={0.4} transparent opacity={0.5} />
+      <primitive object={stemMesh} />
+
+      {/* Longitudinal fissure line */}
+      <mesh position={[0, 0.04, 0]} rotation={[0, 0, Math.PI / 2]}>
+        <cylinderGeometry args={[0.006, 0.006, 1.55, 6]} />
+        <meshStandardMaterial color="#06b6d4" emissive="#06b6d4"
+          emissiveIntensity={0.9} transparent opacity={0.30} />
       </mesh>
 
-      {/* Synapse lines */}
-      {synapseLines.map((line, i) => (
-        <primitive key={`s-${i}`} object={line} />
-      ))}
+      {/* Inner ambient glow */}
+      <mesh position={[0, 0, 0]}>
+        <sphereGeometry args={[0.88, 14, 14]} />
+        <meshStandardMaterial
+          color="#0d9488" emissive="#0d9488"
+          emissiveIntensity={1} transparent opacity={0.04}
+          side={THREE.BackSide} depthWrite={false}
+        />
+      </mesh>
     </group>
   );
 };
 
 const AboutScene = () => (
   <div className="w-full h-[300px]">
-    <Canvas camera={{ position: [0, 0.5, 3.5], fov: 50 }}>
+    <Canvas camera={{ position: [2.0, 0.5, 3.0], fov: 48 }}>
       <Suspense fallback={null}>
-        <ambientLight intensity={0.15} />
-        <pointLight position={[3, 3, 3]} intensity={0.8} color="#34d399" />
-        <pointLight position={[-3, -1, -3]} intensity={0.4} color="#06b6d4" />
+        <ambientLight intensity={0.10} />
+        <pointLight position={[4, 3, 3]}    intensity={1.1} color="#34d399" />
+        <pointLight position={[-3, -1, -3]} intensity={0.55} color="#06b6d4" />
+        <pointLight position={[0, 4, 1]}    intensity={0.35} color="#a7f3d0" />
         <Brain />
       </Suspense>
     </Canvas>

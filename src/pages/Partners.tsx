@@ -18,12 +18,35 @@ const fadeUp = {
   transition: { duration: 0.6 },
 };
 
+const PARTNERS_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Healthcare Integration & Partner Program | HealthAuras",
+  "url": "https://healthauras.software/partners",
+  "description": "Partner with HealthAuras to connect EHR, pharma databases, labs & cloud platforms via FHIR-compliant APIs.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://healthauras.software/" },
+      { "@type": "ListItem", "position": 2, "name": "Partners", "item": "https://healthauras.software/partners" }
+    ]
+  },
+  "about": {
+    "@type": "Organization",
+    "name": "HealthAuras",
+    "url": "https://healthauras.software/",
+    "email": "hello@healthauras.software",
+    "description": "AI-powered healthcare platform with FHIR-ready open integration ecosystem for EHR, pharma, lab, and cloud providers."
+  }
+} as Record<string, unknown>;
+
 const PartnersPage = () => {
   usePageSEO({
-    title: "Partner Ecosystem — Integrate & Collaborate with HealthAuras",
-    description: "Join HealthAuras' partner network. Connect with pharma, labs, cloud providers, and health-tech platforms through our open integration ecosystem.",
-    keywords: "HealthAuras partners, healthcare integration, health tech partnership, pharma software integration, lab system integration, cloud health platform, healthcare API, healthauras ecosystem",
+    title: "Healthcare Integration & Partner Program | HealthAuras",
+    description: "Partner with HealthAuras. Integrate EHR, pharma & lab systems via FHIR APIs. Join our strategic, technology or channel partner program today.",
+    keywords: "healthcare API integration, EHR integration platform, FHIR API healthcare, Epic Cerner Allscripts integration, pharma software integration, health tech partnership India, healthcare technology partner program, clinical data interoperability, lab system integration",
     canonical: "https://healthauras.software/partners",
+    jsonLd: PARTNERS_JSON_LD,
   });
   return (
   <Layout>

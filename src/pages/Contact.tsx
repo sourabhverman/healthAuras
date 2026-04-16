@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { usePageSEO } from "@/hooks/use-page-seo";
 import Layout from "@/components/Layout";
 import ContactScene from "@/components/scenes/ContactScene";
 import HeartbeatBg from "@/components/scenes/HeartbeatBg";
 import EcosystemBg from "@/components/scenes/EcosystemBg";
-import { Mail, Phone, MapPin, Send, Calendar, Globe, Clock, MessageSquare, Handshake, Briefcase, Upload } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Calendar, Globe, Clock, MessageSquare, Handshake, Briefcase } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const fadeUp = {
@@ -23,45 +23,60 @@ const PARTNER_TYPES = [
   { value: "Investor / Strategic Partner", label: "Investor / Strategic Partner", desc: "Join us in scaling AI-powered healthcare to clinics and hospitals globally." },
 ];
 
-const CAREER_ROLES = [
-  "Frontend Developer (React / TypeScript)",
-  "Backend Developer (Node.js / Python)",
-  "AI / ML Engineer",
-  "Healthcare Sales Executive",
-  "Customer Success Manager",
-  "Business Development Manager",
-  "UI / UX Designer",
-  "Other",
-];
+type TabType = "demo" | "partner" | "support";
 
-type TabType = "demo" | "partner" | "support" | "career";
-
-const toBase64 = (file: File): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve((reader.result as string).split(",")[1]);
-    reader.onerror = reject;
-  });
+const CONTACT_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contact HealthAuras — Book a Free Demo",
+  "url": "https://healthauras.software/contact",
+  "description": "Book a free HealthAuras product demo or get support. Our team responds within 24 hours.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://healthauras.software/" },
+      { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://healthauras.software/contact" }
+    ]
+  },
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "HealthAuras",
+    "url": "https://healthauras.software/",
+    "email": "hello@healthauras.software",
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "email": "hello@healthauras.software",
+        "contactType": "sales",
+        "availableLanguage": ["English", "Hindi"],
+        "areaServed": ["IN", "US", "GB", "AE", "SG"]
+      },
+      {
+        "@type": "ContactPoint",
+        "email": "hello@healthauras.software",
+        "contactType": "customer support",
+        "availableLanguage": ["English", "Hindi"]
+      }
+    ]
+  }
+} as Record<string, unknown>;
 
 const ContactPage = () => {
   usePageSEO({
-    title: "Contact HealthAuras — Book a Demo, Partner or Join Our Team",
-    description: "Get in touch with HealthAuras for product demos, partnerships, support, or career opportunities. AI Receptionist, Clinic Management & Hospital ERP.",
-    keywords: "contact HealthAuras, book demo healthcare software, healthcare partnership, health tech career, clinic software demo, hospital ERP demo, healthauras contact",
+    title: "Contact HealthAuras — Book a Free Demo Today",
+    description: "Book a free HealthAuras product demo or get support. We respond within 24 hours. AI Receptionist, Clinic Management & Hospital ERP demos available.",
+    keywords: "book clinic software demo, HealthAuras free demo, healthcare software demo India, clinic management software pricing, hospital ERP demo, AI healthcare demo India, contact HealthAuras, healthcare software support",
     canonical: "https://healthauras.software/contact",
+    jsonLd: CONTACT_JSON_LD,
   });
 
   const { toast } = useToast();
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [tab, setTab] = useState<TabType>("demo");
-  const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
-    name: "", email: "", company: "", product: "", message: "",
-    partnerType: "", position: "", experience: "", coverLetter: "",
+    name: "", email: "", company: "", product: "", message: "", partnerType: "",
   });
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
@@ -71,16 +86,10 @@ const ContactPage = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      let attachments: { filename: string; content: string }[] | undefined;
-      if (tab === "career" && resumeFile) {
-        attachments = [{ filename: resumeFile.name, content: await toBase64(resumeFile) }];
-      }
-
       const subjectMap: Record<TabType, string> = {
         demo: "Demo Request Received — HealthAuras",
         partner: "Partnership Inquiry Received — HealthAuras",
         support: "Support Request Received — HealthAuras",
-        career: "Career Application Received — HealthAuras",
       };
 
       const summaryRows =
@@ -92,13 +101,8 @@ const ContactPage = () => {
           ? `<tr><td style="padding:8px 0;color:#94a3b8;width:140px">Organization:</td><td style="padding:8px 0;color:#f1f5f9;font-weight:500">${form.company || "Not specified"}</td></tr>
              <tr><td style="padding:8px 0;color:#94a3b8">Partner Type:</td><td style="padding:8px 0;color:#f1f5f9;font-weight:500">${form.partnerType}</td></tr>
              <tr><td style="padding:8px 0;color:#94a3b8;vertical-align:top">Message:</td><td style="padding:8px 0;color:#f1f5f9;line-height:1.6">${form.message}</td></tr>`
-          : tab === "support"
-          ? `<tr><td style="padding:8px 0;color:#94a3b8;width:140px">Organization:</td><td style="padding:8px 0;color:#f1f5f9;font-weight:500">${form.company || "Not specified"}</td></tr>
-             <tr><td style="padding:8px 0;color:#94a3b8;vertical-align:top">Issue:</td><td style="padding:8px 0;color:#f1f5f9;line-height:1.6">${form.message}</td></tr>`
-          : `<tr><td style="padding:8px 0;color:#94a3b8;width:140px">Role Applied:</td><td style="padding:8px 0;color:#f1f5f9;font-weight:500">${form.position}</td></tr>
-             <tr><td style="padding:8px 0;color:#94a3b8">Experience:</td><td style="padding:8px 0;color:#f1f5f9;font-weight:500">${form.experience} years</td></tr>
-             <tr><td style="padding:8px 0;color:#94a3b8;vertical-align:top">Cover Letter:</td><td style="padding:8px 0;color:#f1f5f9;line-height:1.6">${form.coverLetter}</td></tr>
-             <tr><td style="padding:8px 0;color:#94a3b8">Resume:</td><td style="padding:8px 0;color:#f1f5f9;font-weight:500">${resumeFile ? resumeFile.name + " (attached)" : "Not provided"}</td></tr>`;
+          : `<tr><td style="padding:8px 0;color:#94a3b8;width:140px">Organization:</td><td style="padding:8px 0;color:#f1f5f9;font-weight:500">${form.company || "Not specified"}</td></tr>
+             <tr><td style="padding:8px 0;color:#94a3b8;vertical-align:top">Issue:</td><td style="padding:8px 0;color:#f1f5f9;line-height:1.6">${form.message}</td></tr>`;
 
       const html = `
         <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;max-width:600px;margin:0 auto;background:#020817;border-radius:16px;overflow:hidden;border:1px solid #1e293b;color:#f8fafc;">
@@ -131,7 +135,6 @@ const ContactPage = () => {
           cc: ["hello@healthauras.software", "sourabhverma@healthauras.software"],
           subject: subjectMap[tab],
           html,
-          ...(attachments ? { attachments } : {}),
         }),
       });
 
@@ -140,12 +143,9 @@ const ContactPage = () => {
           demo: "Demo booked! We'll confirm your slot within 24 hours.",
           partner: "Partnership inquiry received! Our team will be in touch soon.",
           support: "Support ticket raised! We'll respond within 24 hours.",
-          career: "Application received! We'll review your profile and get back to you.",
         };
         toast({ title: "Sent successfully!", description: successMsg[tab] });
-        setForm({ name: "", email: "", company: "", product: "", message: "", partnerType: "", position: "", experience: "", coverLetter: "" });
-        setResumeFile(null);
-        if (fileInputRef.current) fileInputRef.current.value = "";
+        setForm({ name: "", email: "", company: "", product: "", message: "", partnerType: "" });
       } else {
         const err = await response.json();
         toast({ title: "Failed to send", description: err.message || "Please try again.", variant: "destructive" });
@@ -226,7 +226,14 @@ const ContactPage = () => {
 
               <div className="glass-card p-6 space-y-3">
                 <div className="flex items-center gap-3"><Briefcase className="w-5 h-5 text-emerald-400" /><h4 className="font-display font-semibold">Join Our Team</h4></div>
-                <p className="text-sm text-muted-foreground">We're hiring passionate people who want to transform healthcare with AI. Upload your resume and apply.</p>
+                <p className="text-sm text-muted-foreground">We're hiring passionate people who want to transform healthcare with AI. Send your resume directly to:</p>
+                <a
+                  href="mailto:sourabhverma@healthauras.software"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors break-all"
+                >
+                  <Mail className="w-4 h-4 flex-shrink-0" />
+                  hello@healthauras.software
+                </a>
               </div>
             </motion.div>
 
@@ -240,7 +247,6 @@ const ContactPage = () => {
                     { key: "demo",    label: "Book Demo" },
                     { key: "partner", label: "Partner"   },
                     { key: "support", label: "Support"   },
-                    { key: "career",  label: "Career"    },
                   ] as { key: TabType; label: string }[]).map(({ key, label }) => (
                     <button
                       key={key}
@@ -335,55 +341,9 @@ const ContactPage = () => {
                   </>
                 )}
 
-                {/* ── CAREER fields ── */}
-                {tab === "career" && (
-                  <>
-                    <div>
-                      <label className="text-xs font-semibold text-muted-foreground mb-1.5 block">Role You're Applying For</label>
-                      <select required value={form.position} onChange={set("position")} className={inputCls + " appearance-none"}>
-                        <option value="" disabled>Select a position…</option>
-                        {CAREER_ROLES.map((r) => <option key={r}>{r}</option>)}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="text-xs font-semibold text-muted-foreground mb-1.5 block">Years of Experience</label>
-                      <input required type="number" min={0} max={40} value={form.experience} onChange={set("experience")}
-                        placeholder="e.g. 3" className={inputCls} />
-                    </div>
-                    <div>
-                      <label className="text-xs font-semibold text-muted-foreground mb-1.5 block">Cover Letter / Why HealthAuras?</label>
-                      <textarea required value={form.coverLetter} onChange={set("coverLetter")} rows={4}
-                        placeholder="Tell us why you want to work with us and what you'll bring to the team…" className={inputCls + " resize-none"} />
-                    </div>
-                    <div>
-                      <label className="text-xs font-semibold text-muted-foreground mb-1.5 block">Resume / CV <span className="text-muted-foreground/50">(PDF or DOC, max 5 MB)</span></label>
-                      <div
-                        onClick={() => fileInputRef.current?.click()}
-                        className="cursor-pointer w-full border-2 border-dashed border-border hover:border-emerald-400/50 rounded-lg px-4 py-6 flex flex-col items-center gap-2 transition-colors bg-secondary/30"
-                      >
-                        <Upload className="w-6 h-6 text-emerald-400" />
-                        <span className="text-sm text-muted-foreground">
-                          {resumeFile ? resumeFile.name : "Click to upload your resume"}
-                        </span>
-                      </div>
-                      <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept=".pdf,.doc,.docx"
-                        className="hidden"
-                        onChange={(e) => {
-                          const f = e.target.files?.[0];
-                          if (f && f.size <= 5 * 1024 * 1024) setResumeFile(f);
-                          else if (f) toast({ title: "File too large", description: "Please upload a file smaller than 5 MB.", variant: "destructive" });
-                        }}
-                      />
-                    </div>
-                  </>
-                )}
-
                 <button type="submit" disabled={loading} className="btn-primary-glow w-full inline-flex items-center justify-center gap-2 disabled:opacity-50">
                   <Send className="w-4 h-4" />
-                  {loading ? "Sending…" : tab === "career" ? "Submit Application" : tab === "partner" ? "Send Partnership Request" : "Send Message"}
+                  {loading ? "Sending…" : tab === "partner" ? "Send Partnership Request" : "Send Message"}
                 </button>
               </form>
             </motion.div>

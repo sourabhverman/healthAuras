@@ -19,12 +19,40 @@ const fadeUp = {
   transition: { duration: 0.6 },
 };
 
+const CLIENTS_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Healthcare Management Solutions by HealthAuras",
+  "url": "https://healthauras.software/clients",
+  "provider": { "@type": "Organization", "name": "HealthAuras", "url": "https://healthauras.software/" },
+  "description": "End-to-end AI-powered management solutions for solo clinics, multi-specialty centres, and large hospital networks.",
+  "serviceType": "Healthcare Management Software",
+  "areaServed": ["IN", "US", "GB", "AE", "SG"],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Healthcare Solutions",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Clinic Management for Private Clinics", "description": "Streamline daily operations for small to mid-size practices with AI automation. 40% efficiency boost." } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Hospital Management for Large Hospitals", "description": "Enterprise-grade solutions for multi-department coordination and patient flow." } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Specialty Practice Management", "description": "Tailored modules for cardiology, dermatology, orthopedics, and 25+ specialties." } }
+    ]
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://healthauras.software/" },
+      { "@type": "ListItem", "position": 2, "name": "Clients", "item": "https://healthauras.software/clients" }
+    ]
+  }
+} as Record<string, unknown>;
+
 const ClientsPage = () => {
   usePageSEO({
-    title: "For Healthcare Providers — Clinics, Hospitals & Medical Practices | HealthAuras",
-    description: "HealthAuras adapts to every healthcare workflow: from solo clinics and multi-specialty centres to large hospital networks. Scale your practice with AI-powered management tools.",
-    keywords: "clinic management, hospital management software, medical practice management, multi-specialty clinic, healthcare provider software, AI for hospitals, doctor practice software India, patient management",
+    title: "Clinic & Hospital Software Solutions | HealthAuras",
+    description: "HealthAuras powers solo clinics to large hospital networks. Save 4 hrs/day per provider, boost revenue +35% & cut billing errors by 92%. See how it works.",
+    keywords: "clinic management software for doctors India, hospital management software India, multi-specialty clinic software, patient management system, healthcare provider software, small clinic management app, doctor practice management software, AI for hospitals India",
     canonical: "https://healthauras.software/clients",
+    jsonLd: CLIENTS_JSON_LD,
   });
   return (
   <Layout>

@@ -19,12 +19,43 @@ const fadeUp = {
   transition: { duration: 0.6 },
 };
 
+const ABOUT_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "About HealthAuras — AI Healthcare Technology Company",
+  "url": "https://healthauras.software/about",
+  "description": "HealthAuras is building India's most advanced AI healthcare platform — FHIR-ready, HIPAA-compliant, and co-designed with real clinicians.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://healthauras.software/" },
+      { "@type": "ListItem", "position": 2, "name": "About", "item": "https://healthauras.software/about" }
+    ]
+  },
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "HealthAuras",
+    "url": "https://healthauras.software/",
+    "logo": "https://healthauras.software/healthora-favicon.png",
+    "email": "hello@healthauras.software",
+    "foundingDate": "2024",
+    "description": "AI-powered healthcare platform providing clinic management, hospital ERP, AI receptionist, smart scheduling, automated billing, and EMR solutions.",
+    "areaServed": ["IN", "US", "GB", "AE", "SG"],
+    "knowsAbout": [
+      "Clinic Management Software", "Hospital ERP", "AI Medical Receptionist",
+      "Electronic Health Records", "Medical Billing Automation", "FHIR Interoperability",
+      "HIPAA Compliance", "Healthcare AI", "Patient Scheduling"
+    ]
+  }
+} as Record<string, unknown>;
+
 const AboutPage = () => {
   usePageSEO({
     title: "About HealthAuras — AI Healthcare Technology Company",
-    description: "HealthAuras is on a mission to make AI-powered clinic and hospital management accessible for every healthcare provider globally. Learn about our story, vision, and values.",
-    keywords: "about HealthAuras, AI healthcare company, healthcare technology startup India, clinic automation company, hospital software company, health tech, medical AI, health auras",
+    description: "HealthAuras is building India's most advanced AI healthcare platform — FHIR-ready, HIPAA-compliant, and co-designed with real clinicians. Learn our story and values.",
+    keywords: "HealthAuras company, AI healthcare company India, HIPAA compliant clinic software, FHIR healthcare platform India, health tech startup India, AI-powered medical software, clinic automation company, healthcare technology company, about HealthAuras",
     canonical: "https://healthauras.software/about",
+    jsonLd: ABOUT_JSON_LD,
   });
   return (
   <Layout>

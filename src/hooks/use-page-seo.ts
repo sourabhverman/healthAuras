@@ -7,6 +7,7 @@ interface PageSEO {
   canonical: string;
   ogTitle?: string;
   ogDescription?: string;
+  jsonLd?: Record<string, unknown>;
 }
 
 function setMeta(attr: "name" | "property", key: string, content: string) {
@@ -29,6 +30,17 @@ function setCanonical(href: string) {
   el.setAttribute("href", href);
 }
 
+function setPageJsonLd(data: Record<string, unknown>) {
+  let el = document.querySelector<HTMLScriptElement>('script[data-page-ld]');
+  if (!el) {
+    el = document.createElement("script");
+    el.setAttribute("type", "application/ld+json");
+    el.setAttribute("data-page-ld", "true");
+    document.head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(data);
+}
+
 export function usePageSEO({
   title,
   description,
@@ -36,6 +48,7 @@ export function usePageSEO({
   canonical,
   ogTitle,
   ogDescription,
+  jsonLd,
 }: PageSEO) {
   useEffect(() => {
     const prevTitle = document.title;
@@ -54,8 +67,12 @@ export function usePageSEO({
     setMeta("name", "twitter:title", ogTitle ?? title);
     setMeta("name", "twitter:description", ogDescription ?? description);
 
+    // JSON-LD: page-specific structured data injected at runtime
+    if (jsonLd) setPageJsonLd(jsonLd);
+
     return () => {
       document.title = prevTitle;
+      document.querySelector("script[data-page-ld]")?.remove();
     };
-  }, [title, description, keywords, canonical, ogTitle, ogDescription]);
+  }, [title, description, keywords, canonical, ogTitle, ogDescription, jsonLd]);
 }

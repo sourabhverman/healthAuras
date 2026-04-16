@@ -111,4 +111,133 @@
   .btn-outline-glow {
     @apply border border-primary/50 text-primary font-semibold px-8 py-3 rounded-lg transition-all duration-300 hover:bg-primary/10 hover:border-primary hover:shadow-[0_0_20px_rgba(59,130,246,0.2)];
   }
+
+  .anatomy-card {
+    @apply relative overflow-hidden rounded-2xl border border-border/40 bg-card/20 backdrop-blur-md;
+    background:
+      radial-gradient(60% 80% at 50% 55%, hsl(210 100% 56% / 0.14), transparent 68%),
+      linear-gradient(180deg, hsl(222 47% 9% / 0.92), hsl(222 47% 6% / 0.9));
+  }
+
+  .anatomy-image {
+    @apply absolute inset-0 z-10 h-full w-full object-contain px-4 py-3;
+    filter: drop-shadow(0 18px 44px hsl(190 100% 50% / 0.28));
+  }
+
+  .anatomy-bg-layer {
+    background:
+      radial-gradient(70% 55% at 50% 50%, hsl(190 100% 50% / 0.09), transparent 70%),
+      linear-gradient(180deg, hsl(222 47% 8% / 0.74), hsl(222 47% 5% / 0.9));
+  }
+
+  .anatomy-bg-image {
+    @apply absolute left-1/2 top-1/2 z-10 w-[min(88vw,860px)] max-w-none -translate-x-1/2 -translate-y-1/2 object-contain opacity-55;
+    filter: drop-shadow(0 24px 64px hsl(190 100% 50% / 0.22));
+  }
+
+  .anatomy-glow {
+    @apply pointer-events-none absolute left-1/2 top-1/2 h-[65%] w-[75%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl;
+  }
+
+  .anatomy-glow-brain {
+    background: radial-gradient(circle, hsl(175 92% 54% / 0.18), transparent 72%);
+  }
+
+  .anatomy-glow-lungs {
+    background: radial-gradient(circle, hsl(201 94% 57% / 0.24), transparent 72%);
+  }
+
+  .anatomy-glow-heart {
+    background: radial-gradient(circle, hsl(24 95% 53% / 0.26), transparent 72%);
+  }
+
+  .anatomy-fallback,
+  .anatomy-bg-fallback {
+    @apply absolute inset-0 z-10 grid place-items-center px-4 text-sm font-medium text-muted-foreground;
+  }
+
+  .anatomy-fallback {
+    @apply text-center;
+  }
+
+  .anatomy-bg-fallback {
+    @apply text-center opacity-70;
+  }
+
+  .anatomy-brain-motion {
+    animation: anatomyFloat 14s ease-in-out infinite;
+  }
+
+  .anatomy-lungs-motion {
+    animation: anatomyBreathe 5.8s ease-in-out infinite;
+  }
+
+  .anatomy-heart-motion {
+    animation: anatomyHeartPulse 2.2s ease-in-out infinite;
+  }
+}
+
+@keyframes anatomyFloat {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0px) rotate(-1deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes anatomyBreathe {
+  0%,
+  100% {
+    transform: scale(0.99) translateY(1px);
+    opacity: 0.95;
+  }
+  40% {
+    transform: scale(1.03) translateY(-2px);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1.01) translateY(0px);
+    opacity: 0.98;
+  }
+}
+
+@keyframes anatomyHeartPulse {
+  0%,
+  100% {
+    transform: scale(0.985);
+    filter: drop-shadow(0 18px 44px hsl(0 84% 60% / 0.2));
+  }
+  12% {
+    transform: scale(1.02);
+    filter: drop-shadow(0 20px 48px hsl(0 84% 60% / 0.33));
+  }
+  24% {
+    transform: scale(0.995);
+    filter: drop-shadow(0 18px 44px hsl(0 84% 60% / 0.23));
+  }
+  36% {
+    transform: scale(1.013);
+    filter: drop-shadow(0 19px 46px hsl(0 84% 60% / 0.29));
+  }
+  56% {
+    transform: scale(1);
+    filter: drop-shadow(0 18px 44px hsl(0 84% 60% / 0.21));
+  }
+}
+
+@media (max-width: 768px) {
+  .anatomy-bg-image {
+    width: min(105vw, 640px);
+    opacity: 0.42;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anatomy-brain-motion,
+  .anatomy-lungs-motion,
+  .anatomy-heart-motion {
+    animation: none;
+  }
 }

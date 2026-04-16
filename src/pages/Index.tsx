@@ -22,12 +22,60 @@ const fadeUp = {
   transition: { duration: 0.6 },
 };
 
+const HOME_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is HealthAuras?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "HealthAuras is an AI-powered healthcare platform providing end-to-end solutions for clinics and hospitals — AI Receptionist, Clinic Management System, Hospital ERP, automated medical billing, and EMR."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What AI healthcare products does HealthAuras offer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "HealthAuras offers three core products: AI Receptionist for small clinics, Clinic Management System for growing practices, and AI Hospital Management for large hospitals. Add-ons include Prescription Intelligence and a Patient AI Assistant."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is HealthAuras HIPAA compliant?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. HealthAuras is built with HIPAA compliance and privacy-by-design principles. All patient data is encrypted and handled in accordance with international healthcare data protection standards."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does HealthAuras integrate with existing EHR systems?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. HealthAuras is FHIR-ready and integrates with major EHR platforms including Epic, Cerner, and Allscripts, as well as lab systems, pharma databases, and cloud providers like AWS, Azure, and Google Cloud."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I get started with HealthAuras?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Book a free demo on the HealthAuras contact page. Our team responds within 24 hours and will walk you through the solution best suited for your practice size and needs."
+      }
+    }
+  ]
+} as Record<string, unknown>;
+
 const Index = () => {
   usePageSEO({
-    title: "HealthAuras — AI-Powered Healthcare & Clinic Management Platform",
-    description: "India's leading AI healthcare platform: AI Receptionist, Clinic Management System, Hospital ERP, smart scheduling, automated billing & EMR. Trusted by clinics and hospitals worldwide.",
-    keywords: "AI healthcare software, clinic management system, hospital ERP, AI receptionist, patient scheduling software, medical billing software, EMR, EHR, digital health India, healthcare automation, medical practice management, appointment booking, telehealth, healthauras",
+    title: "HealthAuras — AI Healthcare & Clinic Management Platform",
+    description: "India's #1 AI healthcare platform. AI Receptionist, Clinic Management, Hospital ERP, smart scheduling & automated billing. Book a free demo today.",
+    keywords: "AI healthcare software India, clinic management system, hospital management software, AI receptionist for clinics, automated medical billing software, EMR software India, patient scheduling software, healthcare automation platform, digital health India, healthauras",
     canonical: "https://healthauras.software/",
+    jsonLd: HOME_JSON_LD,
   });
   return (
   <Layout>

@@ -79,12 +79,88 @@ const addons = [
   },
 ];
 
+const PRODUCTS_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "HealthAuras AI Healthcare Product Suite",
+  "url": "https://healthauras.software/products",
+  "description": "AI-powered healthcare products for clinics and hospitals of all sizes",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "AI Receptionist",
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "AI Receptionist",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Web",
+        "description": "Intelligent virtual receptionist that handles patient calls, messages, and appointment scheduling automatically — 24/7 without human intervention.",
+        "provider": { "@type": "Organization", "name": "HealthAuras", "url": "https://healthauras.software/" }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Clinic Management System",
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Clinic Management System",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Web",
+        "description": "AI-powered clinic management covering appointments, patient records, billing, and document management in one unified platform.",
+        "provider": { "@type": "Organization", "name": "HealthAuras", "url": "https://healthauras.software/" }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "AI Hospital Management",
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "AI Hospital Management",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Web",
+        "description": "Enterprise-grade AI system that automates hospital workflows, coordinates departments, and enables real-time clinical decisions.",
+        "provider": { "@type": "Organization", "name": "HealthAuras", "url": "https://healthauras.software/" }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Prescription Intelligence",
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Prescription Intelligence",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Web",
+        "description": "Analyze prescriptions, check drug interactions, and optimize dosage recommendations in real time.",
+        "provider": { "@type": "Organization", "name": "HealthAuras", "url": "https://healthauras.software/" }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "name": "Patient AI Assistant",
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Patient AI Assistant",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Web",
+        "description": "Personal health companion for medication tracking, appointment reminders, health record access, and wellness insights.",
+        "provider": { "@type": "Organization", "name": "HealthAuras", "url": "https://healthauras.software/" }
+      }
+    }
+  ]
+} as Record<string, unknown>;
+
 const ProductsPage = () => {
   usePageSEO({
-    title: "AI Healthcare Products — AI Receptionist, Clinic Software, Hospital ERP | HealthAuras",
-    description: "Explore HealthAuras products: AI Receptionist for small clinics, Clinic Management System for growing practices, and full Hospital ERP. Automated scheduling, billing, EMR, WhatsApp & SMS.",
-    keywords: "AI receptionist for clinics, clinic management software, hospital ERP software, medical billing automation, smart appointment scheduling, WhatsApp SMS healthcare, EMR software India, healthcare AI products, doctor appointment system, healthauras products",
+    title: "AI Receptionist, Clinic & Hospital Software | HealthAuras",
+    description: "HealthAuras AI products: AI Receptionist for small clinics, Clinic Management System & Hospital ERP with automated billing, EMR & scheduling. No lock-in contracts.",
+    keywords: "AI receptionist for clinics, clinic management software India, hospital ERP software, medical billing automation software, appointment scheduling system for doctors, EMR system India, prescription management software, healthcare workflow automation, WhatsApp SMS clinic",
     canonical: "https://healthauras.software/products",
+    jsonLd: PRODUCTS_JSON_LD,
   });
   return (
   <Layout>
